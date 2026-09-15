@@ -1,0 +1,49 @@
+name: Lint CI
+
+on:
+  pull_request:
+    paths:
+      - "frontend/**"
+  push:
+    branches: [main]
+    paths:
+      - "frontend/**"
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Format check
+        run: pnpm exec prettier --check .
+
+      - name: Type check
+        run: pnpm type-check
+
+      - name: Build
+        run: pnpm build
+        env:
+          # placeholder — this build only verifies the app compiles,
+          # it doesn't need to reach a real backend
+          VITE_API_BASE_URL: "https://placeholder.example.com"
