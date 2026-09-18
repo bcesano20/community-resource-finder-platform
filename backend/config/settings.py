@@ -131,6 +131,27 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 
+# Logging
+# https://docs.djangoproject.com/en/6.1/topics/logging/
+# Everything goes to stdout/stderr, not a file — Railway captures the
+# process's own output and shows it in the deployment's Logs tab, but only
+# ever reads a file if the container survives, which it isn't guaranteed to.
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG" if DEBUG else "INFO",
+    },
+}
+
+
 # Production security
 # https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 # Off in dev (plain HTTP on localhost), on in production. Railway terminates
