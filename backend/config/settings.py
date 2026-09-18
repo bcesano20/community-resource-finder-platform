@@ -131,14 +131,19 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 
-# Email
-# https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
+# Production security
+# https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
+# Off in dev (plain HTTP on localhost), on in production. Railway terminates
+# TLS at its edge and forwards plain HTTP internally, so SECURE_SSL_REDIRECT
+# needs SECURE_PROXY_SSL_HEADER too, or every request loops on redirect.
 
-MAILERS = {
-    "default": {
-        "BACKEND": "django.core.mail.backends.console.EmailBackend",
-    },
-}
+SECURE_SSL_REDIRECT = not DEBUG
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_HSTS_SECONDS = 0 if DEBUG else 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
+SECURE_HSTS_PRELOAD = not DEBUG
 
 
 # CORS

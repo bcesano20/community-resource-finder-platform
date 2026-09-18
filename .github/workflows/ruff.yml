@@ -71,4 +71,8 @@ jobs:
         run: python manage.py migrate --noinput
 
       - name: Run tests
-        run: pytest
+        # Exit code 5 = "no tests collected", not a failure — the project
+        # has no services/views yet to write tests against. Once real
+        # tests exist this stops triggering and pytest's own exit code
+        # (0 or a real failure) takes over.
+        run: pytest || [ "$?" = "5" ]
