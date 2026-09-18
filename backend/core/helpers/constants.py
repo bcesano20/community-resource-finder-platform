@@ -1,0 +1,9 @@
+MAX_FOLLOW_UP_QUESTIONS = 2
+
+SESSION_TOKEN_SALT = "core.session-token"
+
+TRANSCRIPTION_MODEL = "whisper-1"
+
+PLAN_MODEL = "claude-opus-5"
+PLAN_MAX_TOKENS = 2048
+PLAN_EFFORT = "medium"

@@ -84,7 +84,7 @@ Every function in `core/services/` is pure business logic, with no knowledge of 
 
 - `session_service.py`: validates the code against `settings.ACCESS_CODE`, issues a signed token.
 - `transcription_service.py`: sends the audio to the OpenAI API, returns the text.
-- `plan_service.py`: queries the zone's `Recurso` entries in Postgres, hands the context to `agent_utils`, calls the Anthropic API, returns the already-parsed plan.
+- `plan_service.py`: queries the zone's `Resource` entries in Postgres, hands the context to `agent_utils`, calls the Anthropic API, returns the already-parsed plan.
 
 ## Agent utils
 
