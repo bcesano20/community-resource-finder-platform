@@ -2,6 +2,7 @@ export interface ResourceInterface {
   id: string;
   name: string;
   category: string;
+  description: string;
   address: string;
   phone: string;
   hours: string;
@@ -9,6 +10,7 @@ export interface ResourceInterface {
 
 export interface PlanStepInterface {
   resource: ResourceInterface;
+  why: string;
   nextStep: string;
 }
 
