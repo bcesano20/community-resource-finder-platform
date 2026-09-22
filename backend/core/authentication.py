@@ -1,5 +1,4 @@
 from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
-
 from rest_framework.authentication import BaseAuthentication, get_authorization_header
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.request import Request
@@ -11,8 +10,8 @@ from core.helpers.error_messages import ERROR_MESSAGES
 class SessionUser:
     """Stands in for `request.user` on an authenticated request.
 
-    There's no user registration in this project — a valid session token 
-    only proves the request passed the access-code gate, not who's making it. 
+    There's no user registration in this project — a valid session token
+    only proves the request passed the access-code gate, not who's making it.
     `is_authenticated` is what DRF's `IsAuthenticated` permission checks.
     """
 

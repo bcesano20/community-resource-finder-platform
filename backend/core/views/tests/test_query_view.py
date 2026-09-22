@@ -3,7 +3,6 @@ from unittest.mock import patch
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.signing import TimestampSigner
 from django.urls import reverse
-
 from rest_framework import status
 from rest_framework.test import APIClient
 
