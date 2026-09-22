@@ -161,9 +161,7 @@ def test_post_when_plan_generation_fails_returns_502(mock_generate_followup_resp
 
 
 @patch("core.views.message_view.generate_followup_response")
-def test_post_when_model_response_is_invalid_returns_502(
-    mock_generate_followup_response, settings
-):
+def test_post_when_model_response_is_invalid_returns_502(mock_generate_followup_response, settings):
     settings.SECURE_SSL_REDIRECT = False
     mock_generate_followup_response.side_effect = InvalidModelResponseError()
     client = _authenticated_client()
