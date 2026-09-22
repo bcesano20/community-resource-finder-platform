@@ -1,20 +1,20 @@
 import { API_ROUTES } from '@/helpers/constants';
-import type { PlanInterface } from '@/types';
+import {
+  queryResponseParser,
+  type QueryResponse,
+  type QueryResponseParser,
+} from '@/apiParsers/queries';
 import { apiRequest } from '@/api/client';
 
-// Specific Response Type for this apiCall
-interface SubmitQueryResponse {
-  transcript: string;
-  plan: PlanInterface;
-}
-
 // Send the audio message to the AI model
-export function submitQueryAPICall(audio: Blob): Promise<SubmitQueryResponse> {
+export async function submitQueryAPICall(audio: Blob): Promise<QueryResponse> {
   const formData = new FormData();
   formData.append('audio', audio);
 
-  return apiRequest<SubmitQueryResponse>(API_ROUTES.queries, {
+  const response = await apiRequest<QueryResponseParser>(API_ROUTES.queries, {
     method: 'POST',
     body: formData,
   });
+
+  return queryResponseParser(response);
 }
