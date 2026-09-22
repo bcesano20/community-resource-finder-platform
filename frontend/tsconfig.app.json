@@ -33,6 +33,8 @@
       "@/hooks/*": ["./src/hooks/*"],
       "@/api": ["./src/apiCalls"],
       "@/api/*": ["./src/apiCalls/*"],
+      "@/apiParsers": ["./src/apiParsers"],
+      "@/apiParsers/*": ["./src/apiParsers/*"],
       "@/types": ["./src/types"],
       "@/types/*": ["./src/types/*"],
       "@/helpers": ["./src/helpers"],

@@ -12,6 +12,7 @@ export default defineConfig({
       '@/pages': path.resolve(import.meta.dirname, './src/pages'),
       '@/hooks': path.resolve(import.meta.dirname, './src/hooks'),
       '@/api': path.resolve(import.meta.dirname, './src/apiCalls'),
+      '@/apiParsers': path.resolve(import.meta.dirname, './src/apiParsers'),
       '@/types': path.resolve(import.meta.dirname, './src/types'),
       '@/helpers': path.resolve(import.meta.dirname, './src/helpers'),
     },
