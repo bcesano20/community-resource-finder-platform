@@ -5,4 +5,6 @@ ERROR_MESSAGES = {
     "TRANSCRIPTION_FAILED": "We couldn't transcribe that recording. Please try again.",
     "PLAN_GENERATION_FAILED": "Something went wrong while building the plan. Please try again.",
     "INVALID_MODEL_RESPONSE": "Something went wrong while building the plan. Please try again.",
+    "INVALID_SESSION_TOKEN": "Your session has expired. Please enter the access code again.",
+    "GENERIC_ERROR": "Something went wrong. Please try again.",
 }

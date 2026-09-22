@@ -184,6 +184,7 @@ CORS_ALLOWED_ORIGINS = [
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "EXCEPTION_HANDLER": "core.helpers.exceptions.custom_exception_handler",
     # Browsable API is a dev convenience only — production exposes JSON alone.
     "DEFAULT_RENDERER_CLASSES": (
         ["rest_framework.renderers.JSONRenderer"]
