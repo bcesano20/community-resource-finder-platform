@@ -18,6 +18,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from core.views import MessageView, QueryView, SessionView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/session/", SessionView.as_view(), name="session"),
+    path("api/queries/", QueryView.as_view(), name="queries"),
+    path("api/messages/", MessageView.as_view(), name="messages"),
 ]
