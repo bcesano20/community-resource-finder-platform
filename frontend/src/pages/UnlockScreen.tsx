@@ -1,32 +1,28 @@
 import { useState } from 'react';
 
 import { ERROR_MESSAGES } from '@/helpers/constants';
-import { useSession } from '@/hooks/useSession';
+import { isValidAccessCode } from '@/helpers/formatters';
 
 interface UnlockScreenProps {
-  onUnlock: () => void;
+  isLoading: boolean;
+  error: string | null;
+  onUnlock: (accessCode: string) => void;
 }
 
-export function UnlockScreen({ onUnlock }: UnlockScreenProps) {
+export function UnlockScreen({ isLoading, error, onUnlock }: UnlockScreenProps) {
   const [accessCode, setAccessCode] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-
-  // TODO: export 'unlock' from the hook when the backend be ready, currently is the flow bypass that auth
-  const { isLoading, error } = useSession();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!accessCode.trim()) {
+    if (!isValidAccessCode(accessCode)) {
       setErrorMsg(ERROR_MESSAGES.EMPTY_CODE);
       return;
     }
 
     setErrorMsg(null);
-
-    // TODO (testing only, remove once /api/session/ exists): any non-empty code unlocks without calling the backend
-    // void unlock(accessCode);
-    onUnlock();
+    onUnlock(accessCode);
   };
 
   return (

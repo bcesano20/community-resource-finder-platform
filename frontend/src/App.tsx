@@ -1,20 +1,18 @@
-import { useState } from 'react';
-
 import { Layout } from './Layout';
 
 import { ChatScreen } from './pages/ChatScreen';
 import { UnlockScreen } from './pages/UnlockScreen';
-import { WELCOME_CHAT_MESSAGE } from './helpers/constants';
+import { useSession } from './hooks/useSession';
 
 export function App() {
-  const [isUnlocked, setIsUnlocked] = useState<boolean>(false);
+  const { isUnlocked, isLoading, error, unlock, lock } = useSession();
 
   return (
     <Layout>
       {isUnlocked ? (
-        <ChatScreen messages={[WELCOME_CHAT_MESSAGE]} />
+        <ChatScreen onSessionExpired={lock} />
       ) : (
-        <UnlockScreen onUnlock={() => setIsUnlocked(true)} />
+        <UnlockScreen isLoading={isLoading} error={error} onUnlock={unlock} />
       )}
     </Layout>
   );
