@@ -30,9 +30,12 @@ _PLAN_STEPS_SCHEMA = {
 _FOLLOW_UP_QUESTIONS_SCHEMA = {
     "type": "array",
     "items": {"type": "string"},
-    "maxItems": MAX_FOLLOW_UP_QUESTIONS,
+    # Anthropic's tool input_schema doesn't support JSON Schema's `maxItems`
+    # for array types, so the limit is enforced through the description text
+    # instead of schema validation.
     "description": (
-        "Clarifying questions for the volunteer, only if they'd meaningfully improve the plan."
+        f"Clarifying questions for the volunteer, only if they'd meaningfully improve the "
+        f"plan. At most {MAX_FOLLOW_UP_QUESTIONS}."
     ),
 }
 
