@@ -17,6 +17,8 @@ export const ERROR_MESSAGES = {
   EMPTY_CODE: 'Please, enter the code.',
   NETWORK_ERROR: 'Something went wrong. Please check your connection and try again.',
   GENERIC_ERROR: 'Something went wrong. Please try again.',
+  SESSION_EXPIRED: 'Your session expired. Please enter the access code again.',
+  EMPTY_FOLLOW_UP: 'Please, type a question before sending.',
 } as const;
 
 export const WELCOME_CHAT_MESSAGE: ChatMessageInterface = {
@@ -24,3 +26,9 @@ export const WELCOME_CHAT_MESSAGE: ChatMessageInterface = {
   role: 'assistant',
   text: "Record what the person shares about their situation, and I'll help put together an action plan using community resources in this area.",
 };
+
+// /api/queries/ only returns a transcript + plan, no conversational reply text
+export const PLAN_READY_MESSAGE = "Here's a plan based on what you shared:";
+
+// like /api/messages/ does, so this is the assistant bubble shown alongside it.
+export const FOLLOW_UP_INPUT_PLACEHOLDER = 'Ask a follow-up question…';

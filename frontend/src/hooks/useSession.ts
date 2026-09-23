@@ -25,5 +25,13 @@ export function useSession() {
     }
   }, []);
 
-  return { isUnlocked, isLoading, error, unlock };
+  // Drops back to the unlock screen — used both for an explicit sign-out and
+  // for a 401 from the backend (session token expired or was never valid).
+  const lock = useCallback((message?: string) => {
+    sessionStorage.removeItem(SESSION_TOKEN_STORAGE_KEY);
+    setIsUnlocked(false);
+    setError(message ?? null);
+  }, []);
+
+  return { isUnlocked, isLoading, error, unlock, lock };
 }

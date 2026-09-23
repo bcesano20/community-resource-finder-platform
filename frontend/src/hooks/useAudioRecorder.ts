@@ -5,6 +5,7 @@ export function useAudioRecorder() {
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
+  const stopResolveRef = useRef<((blob: Blob) => void) | null>(null);
 
   const startRecording = useCallback(async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -15,10 +16,14 @@ export function useAudioRecorder() {
       chunksRef.current.push(event.data);
     };
     mediaRecorder.onstop = () => {
-      setAudioBlob(new Blob(chunksRef.current, { type: 'audio/webm' }));
+      const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
+      setAudioBlob(blob);
 
       // release the mic so the browser's recording indicator turns off
       stream.getTracks().forEach((track) => track.stop());
+
+      stopResolveRef.current?.(blob);
+      stopResolveRef.current = null;
     };
 
     mediaRecorder.start();
@@ -26,9 +31,16 @@ export function useAudioRecorder() {
     setIsRecording(true);
   }, []);
 
-  const stopRecording = useCallback(() => {
-    mediaRecorderRef.current?.stop();
+  // Returns a promise instead of relying on the `audioBlob` state, since the
+  // blob is only assembled asynchronously inside `onstop` — callers that need
+  // the recording right after stopping (e.g. to submit it) can await this.
+  const stopRecording = useCallback((): Promise<Blob> => {
     setIsRecording(false);
+
+    return new Promise((resolve) => {
+      stopResolveRef.current = resolve;
+      mediaRecorderRef.current?.stop();
+    });
   }, []);
 
   return { isRecording, audioBlob, startRecording, stopRecording };
