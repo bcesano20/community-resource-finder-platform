@@ -66,7 +66,7 @@ export function ChatScreen({ onSessionExpired }: ChatScreenProps) {
       {error ? <p className="px-4 text-sm font-bold text-red-700">{error}</p> : null}
 
       {canAskFollowUp ? (
-        <form onSubmit={handleFollowUpSubmit} className="flex gap-2 px-4 pb-2">
+        <form onSubmit={handleFollowUpSubmit} className="flex gap-3 px-4 pb-2 pt-4">
           <input
             type="text"
             aria-label="Follow-up question"
@@ -82,7 +82,7 @@ export function ChatScreen({ onSessionExpired }: ChatScreenProps) {
             disabled={isSending}
             className="rounded-lg bg-blue-800 px-4 py-2 font-medium text-white disabled:opacity-50"
           >
-            <span aria-hidden="true">📨</span>
+            <span aria-hidden="true">⌯⌲</span>
           </button>
         </form>
       ) : null}
@@ -90,7 +90,7 @@ export function ChatScreen({ onSessionExpired }: ChatScreenProps) {
         <p className="px-4 text-sm font-bold text-red-700">{followUpError}</p>
       ) : null}
 
-      <div className="flex justify-center p-4">
+      <div className="flex justify-center px-4 pt-5">
         <button
           type="button"
           aria-label={isRecording ? 'Stop recording' : 'Start recording'}
