@@ -1,6 +1,6 @@
 import logging
 
-from core.helpers.constants import MAX_FOLLOW_UP_QUESTIONS
+from core.helpers.constants import MAX_FOLLOW_UP_QUESTIONS, MAX_PLAN_STEPS
 from core.helpers.exceptions import InvalidModelResponseError
 
 logger = logging.getLogger(__name__)
@@ -32,10 +32,10 @@ def parse_resource_plan(tool_input: dict, resources_by_id: dict[str, dict]) -> d
         logger.warning("Missing key in model response: %s", exc)
         raise InvalidModelResponseError(f"Missing key in model response: {exc}") from exc
 
-    # The schema can only describe this limit, not enforce it (Anthropic's
+    # The schema can only describe these limits, not enforce them (Anthropic's
     # tool input_schema doesn't support `maxItems`), so it's capped here.
     return {
-        "steps": [_parse_step(step, resources_by_id) for step in steps],
+        "steps": [_parse_step(step, resources_by_id) for step in steps[:MAX_PLAN_STEPS]],
         "follow_up_questions": follow_up_questions[:MAX_FOLLOW_UP_QUESTIONS],
     }
 
