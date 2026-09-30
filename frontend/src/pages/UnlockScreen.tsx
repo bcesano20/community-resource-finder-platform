@@ -28,7 +28,7 @@ export function UnlockScreen({ isLoading, error, onUnlock }: UnlockScreenProps) 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-1 flex-col justify-center gap-4 bg-gradient-to-br from-blue-700 via-blue-500 to-blue-300 p-6"
+      className="flex flex-1 flex-col justify-center gap-4 bg-gradient-to-br from-blue-700 via-blue-500 to-blue-300 p-6 min-h-[400px]"
     >
       <h1 className="text-xl font-semibold text-white">Enter access code</h1>
       <input

@@ -43,7 +43,7 @@ export function ChatScreen({ onSessionExpired }: ChatScreenProps) {
   };
 
   return (
-    <div className="flex flex-1 flex-col p-6 bg-gradient-to-br from-blue-700 via-blue-500 to-blue-300">
+    <div className="flex flex-1 flex-col p-6 bg-gradient-to-br from-blue-700 via-blue-500 to-blue-300 min-h-[400px]">
       <div className="flex-1 space-y-3 overflow-y-auto p-4 bg-gray-100 rounded-2xl">
         {messages.map((message) => (
           <div key={message.id} className="space-y-2">
