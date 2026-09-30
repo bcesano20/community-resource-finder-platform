@@ -4,7 +4,11 @@ import openai
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from core.helpers.constants import TRANSCRIPTION_FILENAME, TRANSCRIPTION_MODEL
+from core.helpers.constants import (
+    TRANSCRIPTION_FILENAME,
+    TRANSCRIPTION_LANGUAGE,
+    TRANSCRIPTION_MODEL,
+)
 from core.helpers.exceptions import TranscriptionError
 from core.services.transcription_service import transcribe_audio
 
@@ -43,3 +47,4 @@ def test_transcribe_audio_returns_transcript_text_on_success():
     # UploadedFile — see transcribe_audio's docstring comment for why the
     # filename is forced rather than trusting the browser's Blob upload.
     assert call_kwargs["file"] == (TRANSCRIPTION_FILENAME, b"fake-audio-bytes", "audio/webm")
+    assert call_kwargs["language"] == TRANSCRIPTION_LANGUAGE

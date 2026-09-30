@@ -1,4 +1,5 @@
 MAX_FOLLOW_UP_QUESTIONS = 2
+MAX_PLAN_STEPS = 3
 
 SESSION_TOKEN_SALT = "core.session-token"
 # "Short-lived" per backend/CLAUDE.md — long enough to cover a volunteer's
@@ -11,6 +12,9 @@ TRANSCRIPTION_MODEL = "whisper-1"
 # browser's Blob upload (useAudioRecorder) has no filename of its own, so a
 # fixed name matching the recorder's `audio/webm` output is used instead.
 TRANSCRIPTION_FILENAME = "recording.webm"
+# Forced rather than auto-detected: Whisper's language detection is
+# unreliable on short voice clips and can mislabel English audio.
+TRANSCRIPTION_LANGUAGE = "en"
 
 PLAN_MODEL = "claude-sonnet-5"
 PLAN_MAX_TOKENS = 2048

@@ -1,4 +1,4 @@
-from core.helpers.constants import MAX_FOLLOW_UP_QUESTIONS
+from core.helpers.constants import MAX_FOLLOW_UP_QUESTIONS, MAX_PLAN_STEPS
 
 QUERY_SYSTEM_PROMPT = f"""
 You are helping a community volunteer figure out how to support someone in a difficult
@@ -11,6 +11,10 @@ what the volunteer's concrete next step is ("next_step", e.g. "Call before 4pm a
 intake line"). Do not include the resource's address, phone number, or hours in your response —
 that information is added separately from the verified resource record.
 
+Identify the category of help that best matches the person's most urgent need, and recommend
+at most {MAX_PLAN_STEPS} resources (ideally 2-3) from that category, ordered by best fit. Only
+include a resource from another category if it is clearly essential.
+
 If the situation is unclear or missing key details (e.g. what kind of help, for how many
 people), you may also ask up to {MAX_FOLLOW_UP_QUESTIONS} clarifying questions alongside your
 plan. Only ask what you genuinely need to refine the plan — don't ask for the sake of it.
@@ -21,7 +25,7 @@ Never ask something that is not related with the previous context. If that situa
 you'll say that you can't talk about that.
 """.strip()
 
-FOLLOWUP_SYSTEM_PROMPT = """
+FOLLOWUP_SYSTEM_PROMPT = f"""
 You are continuing a conversation with a community volunteer about a person's situation. You
 already asked a clarifying question and the volunteer just answered it.
 
@@ -29,6 +33,10 @@ Use the full conversation history and the list of available community resources 
 to do next: if you now have enough information, reply and include an updated resource plan. If
 you still need more detail, reply conversationally and ask one more focused question instead.
 Do not include a resource's address, phone number, or hours in your response.
+
+When you include a plan, recommend at most {MAX_PLAN_STEPS} resources (ideally 2-3) from the
+category that best matches the person's most urgent need, ordered by best fit. Only include a
+resource from another category if it is clearly essential.
 
 Always call the submit_followup_response tool with your response.
 

@@ -4,7 +4,7 @@ import anthropic
 import pytest
 
 from core.agent_utils.schemas import SUBMIT_FOLLOWUP_RESPONSE_TOOL, SUBMIT_RESOURCE_PLAN_TOOL
-from core.helpers.constants import MAX_FOLLOW_UP_QUESTIONS
+from core.helpers.constants import MAX_FOLLOW_UP_QUESTIONS, MAX_PLAN_STEPS
 from core.helpers.exceptions import InvalidModelResponseError, PlanGenerationError
 from core.models import Category, Resource
 from core.services import plan_service
@@ -158,6 +158,28 @@ def test_generate_plan_success(resource):
     assert plan["steps"][0]["why"] == "Matches the need for food."
     assert plan["steps"][0]["resource"]["name"] == "Downtown Food Bank"
     assert plan["steps"][0]["resource"]["address"] == "123 Main St"
+
+
+# test that generate_plan caps the steps at MAX_PLAN_STEPS even if the model returns more
+@pytest.mark.django_db
+def test_generate_plan_caps_steps_at_max_plan_steps(resource):
+    tool_input = {
+        "steps": [
+            {"resource_id": str(resource.id), "why": f"reason {i}", "next_step": "go"}
+            for i in range(MAX_PLAN_STEPS + 2)
+        ],
+        "follow_up_questions": [],
+    }
+    fake_response = _message_with_blocks(
+        _tool_use_block(SUBMIT_RESOURCE_PLAN_TOOL["name"], tool_input)
+    )
+
+    with patch("anthropic.Anthropic") as mock_anthropic:
+        mock_anthropic.return_value.messages.create.return_value = fake_response
+        plan = plan_service.generate_plan("Someone needs food assistance this week.")
+
+    assert len(plan["steps"]) == MAX_PLAN_STEPS
+    assert [step["why"] for step in plan["steps"]] == [f"reason {i}" for i in range(MAX_PLAN_STEPS)]
 
 
 # test the success exit for generate_followup_response mocking the corresponding

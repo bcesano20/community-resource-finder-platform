@@ -5,7 +5,11 @@ import openai
 from django.conf import settings
 from django.core.files.uploadedfile import UploadedFile
 
-from core.helpers.constants import TRANSCRIPTION_FILENAME, TRANSCRIPTION_MODEL
+from core.helpers.constants import (
+    TRANSCRIPTION_FILENAME,
+    TRANSCRIPTION_LANGUAGE,
+    TRANSCRIPTION_MODEL,
+)
 from core.helpers.exceptions import TranscriptionError
 
 logger = logging.getLogger(__name__)
@@ -27,8 +31,7 @@ def transcribe_audio(audio_file: UploadedFile) -> str:
 
     try:
         response = client.audio.transcriptions.create(
-            model=TRANSCRIPTION_MODEL,
-            file=file_tuple,
+            model=TRANSCRIPTION_MODEL, file=file_tuple, language=TRANSCRIPTION_LANGUAGE
         )
     except openai.OpenAIError as exc:
         logger.exception("OpenAI transcription call failed")

@@ -1,4 +1,4 @@
-from core.helpers.constants import MAX_FOLLOW_UP_QUESTIONS
+from core.helpers.constants import MAX_FOLLOW_UP_QUESTIONS, MAX_PLAN_STEPS
 
 # This is the schema or structure of the tool call Claude must make according the context
 
@@ -25,6 +25,12 @@ _PLAN_STEPS_SCHEMA = {
         "required": ["resource_id", "why", "next_step"],
         "additionalProperties": False,
     },
+    # Same `maxItems` limitation as the follow-up questions below � the limit
+    # is described here and enforced in parse_resource_plan.
+    "description": (
+        f"At most {MAX_PLAN_STEPS} resources, from the category that best matches the "
+        f"situation, ordered by best fit."
+    ),
 }
 
 _FOLLOW_UP_QUESTIONS_SCHEMA = {
