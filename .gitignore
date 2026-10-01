@@ -2,6 +2,7 @@
 .env
 .env.*
 !.env.example
+.ci-local.env
 
 # --- Frontend (React + Vite + pnpm) ---
 node_modules/
