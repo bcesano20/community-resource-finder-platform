@@ -136,3 +136,5 @@ Since we already ruled out JWT and user registration, there's no need to add a J
 ## Testing
 
 `pytest-django`. Tests live next to what they test: `core/services/tests/` and `core/views/tests/`, not a single top-level test folder. The important tests are for `services/` and `agent_utils/parsers.py`, mocking the OpenAI and Anthropic calls (never hit the real API in a test). Views are tested focusing on the contract (status code, response shape, error cases), not on re-testing business logic already covered at the service level.
+
+@../.claude/django-drf-teaching.md
