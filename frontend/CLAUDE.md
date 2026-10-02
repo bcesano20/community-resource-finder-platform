@@ -112,3 +112,5 @@ Main dev dependencies: `typescript`, `vite`, `@vitejs/plugin-react`, `tailwindcs
 ## Testing
 
 Vitest + React Testing Library, focused on the hooks (`useAudioRecorder`, `useFollowUpLimit`).
+
+@../.claude/react-ts-teaching.md
